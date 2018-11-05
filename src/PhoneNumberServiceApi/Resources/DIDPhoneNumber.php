@@ -65,7 +65,7 @@ class DIDPhoneNumber
                 return null;
             }
 
-            return new DIDPhoneNumberModel(json_decode($content));
+            return new DIDPhoneNumberModel(json_decode($content, true));
 
         } catch (\Exception|GuzzleException $e) {
             \Log::error($e);
