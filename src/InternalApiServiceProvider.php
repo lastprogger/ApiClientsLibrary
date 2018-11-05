@@ -49,7 +49,7 @@ class InternalApiServiceProvider extends ServiceProvider
     }
 
     /**
-     * Publish currency resources.
+     * Publish currency resources
      *
      * @return void
      */
