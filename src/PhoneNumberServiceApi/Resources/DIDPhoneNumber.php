@@ -35,6 +35,13 @@ class DIDPhoneNumber
 
                 return str_replace('{id}', $id, $endpoint);
             }
+
+            public function getByPhoneNumber(string $phoneNumber): string
+            {
+                $endpoint = config('api.service_phone_number.endpoint.did.get_by_phone_number');
+
+                return str_replace('{phone_number}', $phoneNumber, $endpoint);
+            }
         };
     }
 
@@ -51,6 +58,37 @@ class DIDPhoneNumber
             $response = $this->httpClient->request(
                 'GET',
                 $this->endpoint()->get($id),
+                [
+                    RequestOptions::HEADERS => [
+                        $tokenHeaderName => $apiToken,
+                        'Accept'         => 'Application/json',
+                    ],
+                ]
+            );
+
+            $content = $response->getBody()->getContents();
+
+            if (empty($content)) {
+                return null;
+            }
+
+            return new DIDPhoneNumberModel(json_decode($content, true));
+
+        } catch (\Exception|GuzzleException $e) {
+            \Log::error($e);
+
+            return null;
+        }
+    }
+
+    public function getByPhoneNumber(string $phoneNumber): ?DIDPhoneNumberModel
+    {
+        $tokenHeaderName = config('api.header_internal_api_token');
+        $apiToken        = config('api.internal_api_token');
+        try {
+            $response = $this->httpClient->request(
+                'GET',
+                $this->endpoint()->getByPhoneNumber($phoneNumber),
                 [
                     RequestOptions::HEADERS => [
                         $tokenHeaderName => $apiToken,

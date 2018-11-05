@@ -11,6 +11,10 @@ return [
                 'create'        => env('SERVICE_PHONE_NUMBER_HOST') . '/api/'. env('SERVICE_PHONE_NUMBER_API_VERSION') . '/did',
                 'list'          => env('SERVICE_PHONE_NUMBER_HOST') . '/api/'. env('SERVICE_PHONE_NUMBER_API_VERSION') . '/did',
                 'change_status' => env('SERVICE_PHONE_NUMBER_HOST') . '/api/'. env('SERVICE_PHONE_NUMBER_API_VERSION') . '/did/{id}/change-status',
+                'get_by_phone_number' => env('SERVICE_PHONE_NUMBER_HOST')
+                                         . '/api/'
+                                         . env('SERVICE_PHONE_NUMBER_API_VERSION')
+                                         . '/did/get-by-number/{phone_number}',
             ],
         ],
     ],
