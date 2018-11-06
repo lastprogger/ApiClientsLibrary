@@ -10,6 +10,7 @@ namespace InternalApi;
 
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Illuminate\Support\ServiceProvider;
+use InternalApi\PbxSchemeServiceApi\PbxSchemeServiceApi;
 use InternalApi\PhoneNumberServiceApi\PhoneNumberServiceApi;
 
 class InternalApiServiceProvider extends ServiceProvider
@@ -44,6 +45,19 @@ class InternalApiServiceProvider extends ServiceProvider
             );
 
             return new PhoneNumberServiceApi($httpClient);
+        }
+        );
+
+        $this->app->bind(
+            'pbx_scheme_service_api', function ($app) {
+
+            $httpClient = new GuzzleHttpClient(
+                [
+                    'base_uri' => $app['config']['api.service_pbx_scheme.host'],
+                ]
+            );
+
+            return new PbxSchemeServiceApi($httpClient);
         }
         );
     }
