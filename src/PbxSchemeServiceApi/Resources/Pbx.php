@@ -64,7 +64,7 @@ class Pbx
                 return null;
             }
 
-            return new json_decode($content, true);
+            return json_decode($content, true);
 
         } catch (\Exception|GuzzleException $e) {
             \Log::error($e);
