@@ -10,6 +10,7 @@ namespace InternalApi;
 
 use GuzzleHttp\Client as GuzzleHttpClient;
 use Illuminate\Support\ServiceProvider;
+use InternalApi\DialplanBuilderService\DialplanBuilderServiceApi;
 use InternalApi\PbxSchemeServiceApi\PbxSchemeServiceApi;
 use InternalApi\PhoneNumberServiceApi\PhoneNumberServiceApi;
 
@@ -58,6 +59,19 @@ class InternalApiServiceProvider extends ServiceProvider
             );
 
             return new PbxSchemeServiceApi($httpClient);
+        }
+        );
+
+        $this->app->bind(
+            'dialplan_builder_service_api', function ($app) {
+
+            $httpClient = new GuzzleHttpClient(
+                [
+                    'base_uri' => $app['config']['api.service_asterisk_dialplan_builder.host'],
+                ]
+            );
+
+            return new DialplanBuilderServiceApi($httpClient);
         }
         );
     }
