@@ -29,4 +29,12 @@ return [
         ],
     ],
 
+    'service_asterisk_dialplan_builder'      => [
+        'host'     => env('SERVICE_ASTERISK_DIALPLAN_BUILDER'),
+        'endpoint' => [
+            'dialplan'  => [
+                'create' => env('SERVICE_ASTERISK_DIALPLAN_BUILDER_HOST') . '/api/'. env('SERVICE_ASTERISK_DIALPLAN_BUILDER_API_VERSION') .'/dialplan',
+            ],
+        ],
+    ],
 ];
