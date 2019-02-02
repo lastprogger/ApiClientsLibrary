@@ -13,6 +13,7 @@ use Illuminate\Support\ServiceProvider;
 use InternalApi\DialplanBuilderService\DialplanBuilderServiceApi;
 use InternalApi\PbxSchemeServiceApi\PbxSchemeServiceApi;
 use InternalApi\PhoneNumberServiceApi\PhoneNumberServiceApi;
+use InternalApi\UserServiceApi\UserServiceApi;
 
 class InternalApiServiceProvider extends ServiceProvider
 {
@@ -72,6 +73,19 @@ class InternalApiServiceProvider extends ServiceProvider
             );
 
             return new DialplanBuilderServiceApi($httpClient);
+        }
+        );
+
+        $this->app->bind(
+            'user_service_api', function ($app) {
+
+            $httpClient = new GuzzleHttpClient(
+                [
+                    'base_uri' => $app['config']['api.user_service.host'],
+                ]
+            );
+
+            return new UserServiceApi($httpClient);
         }
         );
     }
