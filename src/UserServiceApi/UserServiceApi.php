@@ -6,10 +6,10 @@ use InternalApi\ServiceApi;
 class UserServiceApi extends ServiceApi
 {
     /**
-     * @return Resources\Auth
+     * @return Resources\User
      */
-    public function auth(): Resources\Auth
+    public function user(): Resources\User
     {
-        return new Resources\Auth($this->getHttpClient());
+        return new Resources\User($this->getHttpClient());
     }
 }
