@@ -60,7 +60,6 @@ class DIDPhoneNumber
                 $this->endpoint()->get($id),
                 [
                     RequestOptions::HEADERS => [
-                        $tokenHeaderName => $apiToken,
                         'Accept'         => 'Application/json',
                     ],
                 ]
@@ -91,7 +90,6 @@ class DIDPhoneNumber
                 $this->endpoint()->getByPhoneNumber($phoneNumber),
                 [
                     RequestOptions::HEADERS => [
-                        $tokenHeaderName => $apiToken,
                         'Accept'         => 'Application/json',
                     ],
                 ]

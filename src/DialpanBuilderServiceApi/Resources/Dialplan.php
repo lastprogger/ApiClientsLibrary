@@ -51,7 +51,6 @@ class Dialplan
                 $this->endpoint()->get($id),
                 [
                     RequestOptions::HEADERS => [
-                        $tokenHeaderName => $apiToken,
                         'Accept'         => 'Application/json',
                     ],
                 ]
@@ -82,7 +81,6 @@ class Dialplan
                 $this->endpoint()->create(),
                 [
                     RequestOptions::HEADERS => [
-                        $tokenHeaderName => $apiToken,
                         'Accept'         => 'Application/json',
                     ],
                     RequestOptions::JSON => $pbxSchemeData,

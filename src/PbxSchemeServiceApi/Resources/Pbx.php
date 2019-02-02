@@ -52,7 +52,6 @@ class Pbx
                 $this->endpoint()->get($id),
                 [
                     RequestOptions::HEADERS => [
-                        $tokenHeaderName => $apiToken,
                         'Accept'         => 'Application/json',
                     ],
                 ]
