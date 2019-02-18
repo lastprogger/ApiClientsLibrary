@@ -4,6 +4,8 @@ namespace InternalApi\UserServiceApi\Resources;
 
 use GuzzleHttp\ClientInterface as HttpClientInterface;
 use GuzzleHttp\RequestOptions;
+use Illuminate\Support\Facades\Cache;
+use InternalApi\UserServiceApi\Models\User as UserModel;
 
 class User
 {
@@ -33,21 +35,33 @@ class User
         };
     }
 
-    public function getAuthUser(string $authToken): array
+    /**
+     * @param string $authToken
+     *
+     * @return UserModel
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getAuthUser(string $authToken): UserModel
     {
-        $response = $this->httpClient->request(
-            'GET',
-            $this->endpoint()->getAuthUser(),
-            [
-                RequestOptions::HEADERS => [
-                    'Accept'         => 'Application/json',
-                    'Authorization'  => $authToken
+        $data = Cache::remember($authToken, 60 * 60, function () use ($authToken){
+
+            $response = $this->httpClient->request(
+                'GET',
+                $this->endpoint()->getAuthUser(),
+                [
+                    RequestOptions::HEADERS => [
+                        'Accept'         => 'Application/json',
+                        'Authorization'  => $authToken
+                    ]
                 ]
-            ]
-        );
+            );
 
-        $content = $response->getBody()->getContents();
+            $content = $response->getBody()->getContents();
 
-        return json_decode($content, true);
+            return json_decode($content, true);
+
+        });
+
+        return (new UserModel())->setData($data);
     }
 }
