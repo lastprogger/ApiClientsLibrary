@@ -2,7 +2,8 @@
 
 namespace InternalApi\PhoneNumberServiceApi\Models;
 
-use InternalApi\Common\Model;
+use Illuminate\Support\Collection;
+use InternalApi\Common\Model\Model;
 
 class DIDPhoneNumber extends Model
 {
@@ -19,20 +20,9 @@ class DIDPhoneNumber extends Model
      */
     protected $status;
     /**
-     * @var string|null
+     * @var DidToPbx|null
      */
-    protected $companyId;
-    /**
-     * @var string|null
-     */
-    protected $pbxId;
-
-    public function __construct(?array $data = null)
-    {
-        if ($data !== null) {
-            $this->fill($data);
-        }
-    }
+    protected $pbx;
 
     /**
      * @return string
@@ -44,10 +34,14 @@ class DIDPhoneNumber extends Model
 
     /**
      * @param string $id
+     *
+     * @return DIDPhoneNumber
      */
-    public function setId(string $id): void
+    public function setId(string $id): DIDPhoneNumber
     {
         $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -60,10 +54,14 @@ class DIDPhoneNumber extends Model
 
     /**
      * @param string $phoneNumber
+     *
+     * @return DIDPhoneNumber
      */
-    public function setPhoneNumber(string $phoneNumber): void
+    public function setPhoneNumber(string $phoneNumber): DIDPhoneNumber
     {
         $this->phoneNumber = $phoneNumber;
+
+        return $this;
     }
 
     /**
@@ -76,43 +74,33 @@ class DIDPhoneNumber extends Model
 
     /**
      * @param string $status
+     *
+     * @return DIDPhoneNumber
      */
-    public function setStatus(string $status): void
+    public function setStatus(string $status): DIDPhoneNumber
     {
         $this->status = $status;
+
+        return $this;
     }
 
     /**
-     * @return null|string
+     * @return DidToPbx|null
      */
-    public function getCompanyId(): ?string
+    public function getPbx(): ?DidToPbx
     {
-        return $this->companyId;
+        return $this->pbx;
     }
 
     /**
-     * @param null|string $companyId
+     * @param DidToPbx|null $pbx
+     *
+     * @return DIDPhoneNumber
      */
-    public function setCompanyId(?string $companyId): void
+    public function setPbx(Collection $pbxData): DIDPhoneNumber
     {
-        $this->companyId = $companyId;
+        $this->pbx = (new DidToPbx())->setData($pbxData->toArray());
+
+        return $this;
     }
-
-    /**
-     * @return null|string
-     */
-    public function getPbxId(): ?string
-    {
-        return $this->pbxId;
-    }
-
-    /**
-     * @param null|string $pbxId
-     */
-    public function setPbxId(?string $pbxId): void
-    {
-        $this->pbxId = $pbxId;
-    }
-
-
 }

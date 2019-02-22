@@ -70,8 +70,8 @@ class DIDPhoneNumber
             if (empty($content)) {
                 return null;
             }
-
-            return new DIDPhoneNumberModel(json_decode($content, true));
+            $data = json_decode($content['data'], true);
+            return (new DIDPhoneNumberModel())->setData($data);
 
         } catch (\Exception|GuzzleException $e) {
             \Log::error($e);
