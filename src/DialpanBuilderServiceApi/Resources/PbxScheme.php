@@ -6,9 +6,10 @@ namespace InternalApi\DialplanBuilderService\Resources;
 use GuzzleHttp\ClientInterface as HttpClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
+use InternalApi\DialplanBuilderService\Models\PbxScheme as PbxSchemeModel;
 use InternalApi\PhoneNumberServiceApi\Models\DIDPhoneNumber as DIDPhoneNumberModel;
 
-class Dialplan
+class PbxScheme
 {
     /**
      * @var HttpClientInterface
@@ -29,30 +30,30 @@ class Dialplan
     {
         return new class
         {
-            public function create(): string
+            public function getByPbxId($pbxId): string
             {
-                return config('api.service_asterisk_dialplan_builder.endpoint.dialplan.create');
+                $endpoint = config('api.service_asterisk_dialplan_builder.endpoint.pbx_scheme.get_by_pbx_id');
+
+                return str_replace('{pbx_id}',$pbxId, $endpoint);
             }
         };
     }
 
-
     /**
-     * @param array $pbxSchemeData
+     * @param string $pbxId
      *
-     * @return array|null
+     * @return PbxSchemeModel|null
      */
-    public function create(array $pbxSchemeData): ?array
+    public function getByPbxId(string $pbxId): ?PbxSchemeModel
     {
         try {
             $response = $this->httpClient->request(
-                'POST',
-                $this->endpoint()->create(),
+                'GET',
+                $this->endpoint()->getByPbxId($pbxId),
                 [
                     RequestOptions::HEADERS => [
                         'Accept'         => 'Application/json',
                     ],
-                    RequestOptions::JSON => $pbxSchemeData,
                 ]
             );
 
@@ -62,7 +63,7 @@ class Dialplan
                 return null;
             }
 
-            return json_decode($content, true);
+            return (new PbxSchemeModel())->setData($content['data']);
 
         } catch (\Exception|GuzzleException $e) {
             \Log::error($e);

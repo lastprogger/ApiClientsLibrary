@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
  *
  * @package FaMarket\Models
  */
-class Model implements ModelContract, JsonSerializable
+abstract class Model implements ModelContract, JsonSerializable
 {
     /**
      * @var string
@@ -23,6 +23,11 @@ class Model implements ModelContract, JsonSerializable
      * @var string
      */
     protected $updatedAt;
+
+    public static function make($data): self
+    {
+        return (new static())->setData($data);
+    }
 
     /**
      * setData
