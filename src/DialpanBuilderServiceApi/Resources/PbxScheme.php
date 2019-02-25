@@ -62,8 +62,8 @@ class PbxScheme
             if (empty($content)) {
                 return null;
             }
-
-            return (new PbxSchemeModel())->setData($content['data']);
+            $data = json_encode($content, true);
+            return (new PbxSchemeModel())->setData($data['data']);
 
         } catch (\Exception|GuzzleException $e) {
             \Log::error($e);

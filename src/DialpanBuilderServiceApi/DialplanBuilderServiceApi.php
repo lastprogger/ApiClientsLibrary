@@ -28,4 +28,9 @@ class DialplanBuilderServiceApi
     {
         return new Resources\Dialplan($this->httpClient);
     }
+
+    public function pbxScheme(): Resources\PbxScheme
+    {
+        return new Resources\PbxScheme($this->httpClient);
+    }
 }
