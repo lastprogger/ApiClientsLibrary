@@ -40,6 +40,12 @@ return [
                                    . '/api/'
                                    . env('SERVICE_ASTERISK_DIALPLAN_BUILDER_API_VERSION')
                                    .'/pbx-scheme/by-pbx-id/{pbx_id}',
+            ],
+            'sip_user' => [
+                'create' => env('SERVICE_ASTERISK_DIALPLAN_BUILDER_HOST') . '/api/'. env('SERVICE_ASTERISK_DIALPLAN_BUILDER_API_VERSION') .'/sip-user',
+                'delete' => env('SERVICE_ASTERISK_DIALPLAN_BUILDER_HOST') . '/api/'. env('SERVICE_ASTERISK_DIALPLAN_BUILDER_API_VERSION') .'/sip-user/{id}',
+                'get' => env('SERVICE_ASTERISK_DIALPLAN_BUILDER_HOST') . '/api/'. env('SERVICE_ASTERISK_DIALPLAN_BUILDER_API_VERSION') .'/sip-user/{id}',
+
             ]
         ],
     ],
